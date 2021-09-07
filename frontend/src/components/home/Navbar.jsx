@@ -4,7 +4,22 @@ import { navData } from '../constants/data'
 
 const useStyle = makeStyles({
     component:{
-        display: 'flex'
+        display: 'flex',
+        margin: '55px 130px',
+        justifyContent: 'space-between',
+        // flexWrap: 'wrap'
+    },
+    container: {
+        textAlign: 'center',
+        padding: '12px 8px'
+
+    },
+    image: {
+        width: 64
+    },
+    text: {
+        fontSize: 14,
+        fontWeight: 600
     }
 })
 
@@ -14,9 +29,9 @@ function Navbar() {
         <Box className={classes.component}>
             {
                 navData.map(data=>(
-             <Box>  
-             <img src={data.url} alt="" />
-            <Typography>{data.text}</Typography>    
+             <Box className={classes.container}>  
+             <img className={classes.image} src={data.url} alt="" />
+            <Typography className={classes.text}>{data.text}</Typography>    
             </Box>   
                 ))
             }

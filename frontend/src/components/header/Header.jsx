@@ -2,6 +2,7 @@ import React from 'react'
 import {AppBar,Toolbar,makeStyles, Typography, Box, withStyles} from '@material-ui/core'
 import SearchBar from './SearchBar';
 import HeaderButtons from './HeaderButtons';
+import { Link } from 'react-router-dom';
 const useStyle = makeStyles({
     header:{
       backgroundColor: '#2874f0',
@@ -23,6 +24,10 @@ const useStyle = makeStyles({
     component:{
         marginLeft: '12%',
         lineHeight: 0
+    },
+    Link: {
+        textDecoration: 'none',
+        color: 'inherit'
     }
 })
 
@@ -44,7 +49,7 @@ function Header() {
                   <Box className={classes.component}> 
                         <img src={logoURL} alt="logo"  className={classes.logo} />
                         <Box className={classes.container}>
-                        <Typography style={{fontStyle: 'italic',fontSize: '13px'}}>Export <Box component="span" style={{color:'rgb(221, 221, 25)'}}>plus</Box></Typography>
+                      <Link className={classes.Link} to='/'><Typography style={{fontStyle: 'italic',fontSize: '13px'}}>Export <Box component="span" style={{color:'rgb(221, 221, 25)'}}>plus</Box></Typography></Link>
                         <img src={subURL} alt="sublogo" className={classes.subURL} />
                         </Box>
                   </Box>

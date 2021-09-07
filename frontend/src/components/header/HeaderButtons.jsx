@@ -1,6 +1,7 @@
 import React from 'react'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {makeStyles,Button,Box, Typography,Badge} from '@material-ui/core'
+import { Link } from 'react-router-dom';
 const useStyle = makeStyles({
     login:{
      backgroundColor: '#ffffff',
@@ -18,6 +19,10 @@ const useStyle = makeStyles({
          marginRight: 50,
          alignItems: 'center'
      }
+    },
+    Link: {
+        textDecoration: 'none',
+        color: 'inherit'
     }
 })
 function HeaderButtons() {
@@ -27,11 +32,14 @@ function HeaderButtons() {
             <Button className={classes.login} variant="contained">Login</Button>
            <Typography style={{marginTop: 7}}>More</Typography>
            <Box style={{display:'flex'}}>
-               
-           <Badge badgeContent={2} color="secondary">
+           <Link className={classes.Link} to='/cart'>   
+           <Badge badgeContent={2} color="secondary">   
            <ShoppingCartIcon />
            </Badge>
+           </Link> 
+           <Link className={classes.Link} to='/cart'> 
                <Typography style={{marginLeft: 10}}>Cart</Typography>
+           </Link>   
            </Box>
         </Box>
     )

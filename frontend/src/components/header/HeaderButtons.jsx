@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState,useContext } from 'react'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {makeStyles,Button,Box, Typography,Badge} from '@material-ui/core'
 import { Link } from 'react-router-dom';
+import Login from '../login/Login';
+import {LoginContext} from '../context/ContextProvider'
+import Profile from './Profile';
 const useStyle = makeStyles({
-    login:{
+     login:{
      backgroundColor: '#ffffff',
      color: '#7874f0',
      fontWeight: '600',
@@ -27,9 +30,19 @@ const useStyle = makeStyles({
 })
 function HeaderButtons() {
     const classes = useStyle()
+    const [open, setopen] = useState(false)
+    const openDialog = () =>{
+     setopen(true)
+    }
+    const { account, setUserAccount } = useContext(LoginContext);
+
     return (
         <Box className={classes.wrapper}>
-            <Button className={classes.login} variant="contained">Login</Button>
+            {
+                account ? <Profile account={account} setUserAccount={setUserAccount} />: 
+                <Button onClick={()=>openDialog()} className={classes.login} variant="contained">Login</Button>      
+            }
+            
            <Typography style={{marginTop: 7}}>More</Typography>
            <Box style={{display:'flex'}}>
            <Link className={classes.Link} to='/cart'>   
@@ -41,6 +54,7 @@ function HeaderButtons() {
                <Typography style={{marginLeft: 10}}>Cart</Typography>
            </Link>   
            </Box>
+           <Login open={open} setopen={setopen} setUserAccount={setUserAccount} />
         </Box>
     )
 }

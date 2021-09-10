@@ -1,9 +1,12 @@
 import { Box, makeStyles } from '@material-ui/core'
-import React from 'react'
+import React,{useEffect} from 'react'
 import Banner from './Banner'
 import MidSection from './MidSection'
 import Navbar from './Navbar'
 import Slide from './Slide'
+// import { products } from '../constants/data';
+import {useSelector,useDispatch} from 'react-redux'
+import {getProducts as listProducts} from '../../redux/actions/productAction'
 const useStyle = makeStyles({
     component :{
      padding: 10,
@@ -18,8 +21,14 @@ const useStyle = makeStyles({
 })
 function Home() {
     const classes = useStyle()
-     
-
+    const productsGet = useSelector(state => state.getProducts)     
+    const {products} = productsGet;
+    const dispatch = useDispatch()
+    useEffect(() => {
+   
+        dispatch(listProducts())
+       
+    }, [dispatch])
 const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def60050.jpg?q=70';
     return (
         <div>
@@ -32,6 +41,7 @@ const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def6005
                 <Slide
                 timer={true}
                 title='Deals of the Day'
+                products={products}
                /></Box> 
                <Box className={classes.rightWrapper}>
                    <img src={adURL} style={{width: 230}} />
@@ -41,22 +51,27 @@ const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def6005
             <Slide
             timer={false}
             title='Discounts for You'
+            products={products}
             />
             <Slide
             timer={false}
             title='Suggested items'
+            products={products}
             />
             <Slide 
             timer={false}
             title='Top selection'
+            products={products}
             />
             <Slide
             timer={false}
             title='Recommended items'
+            products={products}
             />
             <Slide
             timer={false}
             title='Best Sellers'
+            products={products}
             />
 
         </div>

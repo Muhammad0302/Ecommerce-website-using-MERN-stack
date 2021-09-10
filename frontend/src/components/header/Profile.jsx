@@ -27,7 +27,7 @@ const Profile = ({ account, setUserAccount }) => {
     };
 
     const logout = () => {
-      setUserAccount('');
+        setUserAccount('');
     }
     
     return (

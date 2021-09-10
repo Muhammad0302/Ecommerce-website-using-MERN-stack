@@ -1,7 +1,6 @@
 import React from 'react'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { products } from '../constants/data';
 import ReactDOM from "react-dom";
 import Countdown from "react-countdown"
 import { makeStyles,Box,Typography, Button, Divider } from '@material-ui/core';
@@ -62,7 +61,7 @@ const responsive = {
     }
   })
 
-function Slide({timer,title}) {
+function Slide({timer,title,products}) {
   const classes = useStyle()
   const timerURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/timer_a73398.svg';  
   const renderer = ({hours,minutes,seconds}) =>{

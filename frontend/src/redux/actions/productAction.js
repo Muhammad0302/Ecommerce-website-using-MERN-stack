@@ -11,3 +11,12 @@ export const getProducts =()=> async(dispatch) =>{
         // console.log('Error while calling api',error.message)
     }
 }
+
+export const getProductDetail =(id)=> async(dispatch) =>{
+    try{
+        const {data} = await axios.get(`${url}/product/${id}`)
+        dispatch({type: action.GET_PRODUCT_DETAIL_SUCCESS,payload: data})
+    }catch(error){
+        dispatch({type: action.GET_PRODUCT_DETAIL_FAIL,payload: error.response})
+    }
+}

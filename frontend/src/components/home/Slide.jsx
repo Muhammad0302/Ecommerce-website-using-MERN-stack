@@ -4,7 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import ReactDOM from "react-dom";
 import Countdown from "react-countdown"
 import { makeStyles,Box,Typography, Button, Divider } from '@material-ui/core';
-
+import {Link} from 'react-router-dom'
 const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -97,13 +97,15 @@ function Slide({timer,title,products}) {
             >
                   {
                       products.map(product=>(
-                        <Box textAlign="center" className={classes.wrapper}>
+                       
+                       <Link  to={`product/${product.id}`} style={{textDecoration: 'none',color:'inherit'}}> 
+                         <Box textAlign="center" className={classes.wrapper}>
                           <img className={classes.image} src={product.url} />
                          <Typography className={classes.text} style={{fontWeight: 600,color: '#212121'}}>{product.title.shortTitle}</Typography>
                          <Typography className={classes.text} style={{color: 'green'}}>{product.discount}</Typography>
                          <Typography className={classes.text} style={{color: '#212121',opacity:'0.6'}}>{product.tagline}</Typography>
-                    
                           </Box>
+                          </Link>
                       ))
                   }
             </Carousel>

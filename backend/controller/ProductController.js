@@ -1,6 +1,6 @@
 import product from '../model/productSchema.js'
 
-const getAllProducts = async(request,response) =>{
+ export const getAllProducts = async(request,response) =>{
     try{
      const validateProduct = await product.find({});
      response.json(validateProduct)
@@ -10,4 +10,12 @@ const getAllProducts = async(request,response) =>{
     }
 }
 
-export default getAllProducts
+export const getProductById= async(request,response) =>{
+    try{
+     const Getproduct = await product.findOne({'id':request.params.id});
+     response.json(Getproduct)
+
+    }catch(error){
+        console.log("Error while getting detail of the product: ",error.message)
+    }
+}

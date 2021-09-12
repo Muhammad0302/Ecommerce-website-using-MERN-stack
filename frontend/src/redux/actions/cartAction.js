@@ -9,3 +9,11 @@ export const cartAction =(id)=> async(dispatch) =>{
         console.log('cartAction api failed',error.message)
     }
 }
+
+export const removeFromCart = (id) => (dispatch) => {
+    // console.log(id);
+    dispatch({
+        type: action.REMOVE_FROM_CART,
+        payload: id
+    })
+};

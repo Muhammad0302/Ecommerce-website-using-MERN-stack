@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Login from '../login/Login';
 import {LoginContext} from '../context/ContextProvider'
 import Profile from './Profile';
+import { useSelector,useDispatch } from 'react-redux';
 const useStyle = makeStyles({
      login:{
      backgroundColor: '#ffffff',
@@ -30,6 +31,9 @@ const useStyle = makeStyles({
 })
 function HeaderButtons() {
     const classes = useStyle()
+
+    const {cartItems} = useSelector(state => state.cartAction) 
+
     const [open, setopen] = useState(false)
     const openDialog = () =>{
      setopen(true)
@@ -46,7 +50,7 @@ function HeaderButtons() {
            <Typography style={{marginTop: 7}}>More</Typography>
            <Box style={{display:'flex'}}>
            <Link className={classes.Link} to='/cart'>   
-           <Badge badgeContent={2} color="secondary">   
+           <Badge badgeContent={cartItems.length} color="secondary">   
            <ShoppingCartIcon />
            </Badge>
            </Link> 

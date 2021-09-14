@@ -1,24 +1,31 @@
-import { Box, makeStyles, Typography,Table,TableBody,TableCell,TableRow } from "@material-ui/core";
+import { Box, makeStyles, Typography,Table,TableBody,TableCell,TableRow, Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductDetail } from "../../redux/actions/productAction";
 import {LocalOffer} from '@material-ui/icons';
 import clsx from "clsx";
 import ActionItem from "./ActionItem";
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme=>({
   component: {
     marginTop: 55,
     background: "#F2F2F2",
   },
   container: {
+    width: 'unset',
     margin: "0 80px",
     background: "#fff",
     display: "flex",
+    [theme.breakpoints.down('md')]: {
+      margin: 0
+    }
   },
   rightContainer: {
     marginTop: 50,
     "& > *": {
       marginTop: 10,
+      [theme.breakpoints.down('md')]:{
+        marginLeft: 10
+      }
     },
   },
   smallText: {
@@ -46,8 +53,11 @@ const useStyle = makeStyles({
   removeBorder: {
     borderBottom: 'none',
     
+  },
+  leftContainer: {
+    // minWidth: '30%'
   }
-});
+}));
 function DetailProductView({ match }) {
   const classes = useStyle();
   const date = new Date(new Date().getTime()+( 5 * 24 * 60 * 60 * 1000))
@@ -65,13 +75,14 @@ const sellerURL = 'https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_
   return (
     <Box className={classes.component}>
       {product && Object.keys(product).length && (
-        <Box className={classes.container}>
-          <Box style={{ minWidth: "40%" }}>
+        <Grid container className={classes.container}>
+           
+          <Grid lg={4} md={4} sm={8} xs={12} item className={classes.leftContainer}>
 
            <ActionItem product={product} />
 
-          </Box>
-          <Box className={classes.rightContainer}>
+          </Grid>
+          <Grid lg={8} md={8} sm={8} xs={12} item className={classes.rightContainer}>
             <Typography>{product.title.longTitle}</Typography>
             <Typography
               className={clsx(classes.smallText, classes.greyTextColor)}
@@ -153,8 +164,8 @@ const sellerURL = 'https://rukminim1.flixcart.com/lockin/774/185/images/CCO__PP_
                   </TableRow>
               </TableBody>
             </Table>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       )}
     </Box>
   );

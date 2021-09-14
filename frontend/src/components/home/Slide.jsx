@@ -21,7 +21,7 @@ const responsive = {
     }
   }
 
-  const useStyle = makeStyles({
+  const useStyle = makeStyles(theme=>({
     component: {
      marginTop: 12,
      background: '#ffffff'
@@ -31,7 +31,10 @@ const responsive = {
     },
     deal:{
      padding: '15px 20px',
-     display: 'flex'
+     display: 'flex',
+     [theme.breakpoints.down('md')]: {
+      padding: '15px 2px'
+     }
     },
     dealText:{
       fontSize: 22,
@@ -44,7 +47,10 @@ const responsive = {
       marginLeft: 10,
       display: 'flex',
       alignItems: 'center',
-      fontWeight: 600
+      fontWeight: 600,
+      [theme.breakpoints.down('md')]: {
+        display: 'none'
+      }
     },
     button: {
      marginLeft: 'auto',
@@ -58,8 +64,13 @@ const responsive = {
     },
     wrapper: {
       padding: '35px 15px'
+    },
+    disappear: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
     }
-  })
+    }
+  }));
 
 function Slide({timer,title,products}) {
   const classes = useStyle()
@@ -72,12 +83,13 @@ function Slide({timer,title,products}) {
             <Box className={classes.deal}>
               <Typography className={classes.dealText}>{title}</Typography>
               {
-                  timer && 
+                  timer ? 
                   <>  
-                    <img src={timerURL} style={{width: '24px'}} />
+                    <img className={classes.disappear} src={timerURL} style={{width: '24px'}} />
                     <Countdown date={Date.now() + 5.04e+7} renderer={renderer} />
                     <Button variant="contained" color="primary" className={classes.button}>View all</Button>
-                  </>
+                   </> : 
+                   <Button variant="contained" color="primary" className={classes.button}>View all</Button>
               }
             </Box>
             <Divider />
@@ -91,7 +103,7 @@ function Slide({timer,title,products}) {
             autoPlaySpeed={10000}
             keyBoardControl={true}
             showDots={false}
-            removeArrowOnDeviceType={["tablet","mobile"]}
+            // removeArrowOnDeviceType={["tablet","mobile"]}
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
             >

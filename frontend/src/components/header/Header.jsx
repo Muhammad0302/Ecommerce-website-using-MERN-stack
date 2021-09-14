@@ -1,9 +1,11 @@
 import React from 'react'
-import {AppBar,Toolbar,makeStyles, Typography, Box, withStyles} from '@material-ui/core'
+import {AppBar,Toolbar,makeStyles, Typography, Box, withStyles, IconButton, Drawer,List, ListItem} from '@material-ui/core'
+import { useState } from 'react';
 import SearchBar from './SearchBar';
 import HeaderButtons from './HeaderButtons';
 import { Link } from 'react-router-dom';
-const useStyle = makeStyles({
+import MenuIcon from '@material-ui/icons/Menu';
+const useStyle = makeStyles(theme=>({
     header:{
       backgroundColor: '#2874f0',
       height: 55
@@ -23,13 +25,31 @@ const useStyle = makeStyles({
     },
     component:{
         marginLeft: '12%',
-        lineHeight: 0
+        lineHeight: 0,
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '2%',
+        }
     },
     Link: {
         textDecoration: 'none',
         color: 'inherit'
+    },
+    menueButton :{
+     display: 'none',
+     [theme.breakpoints.down('sm')]: {
+         display: 'block'
+     }
+    },
+    list: {
+        width: 200
+    },
+    customButton: {
+        margin: '0 5% 0 auto',
+        [theme.breakpoints.down('sm')]: {
+            display: 'none'
+        }  
     }
-})
+}));
 
 const ToolBar = withStyles({
     root:{
@@ -39,13 +59,38 @@ const ToolBar = withStyles({
 
 function Header() {
  const classes = useStyle()
+ const [openBtn,setOpenBtn] = useState(false)
  const logoURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/flipkart-plus_8d85f4.png';
  const subURL = 'https://static-assets-web.flixcart.com/www/linchpin/fk-cp-zion/img/plus_aef861.png';
 
+  const handleOpen = () =>{
+      setOpenBtn(true)
+  }
+  const handleClose = () =>{
+    setOpenBtn(false)
+}
+   const list = () =>(
+   <Box className={classes.list} onClick={handleClose}>
+             <List>
+                 <ListItem>
+                 <HeaderButtons /> 
+                 </ListItem>
+             </List>
+     </Box>
+    )
+   
     return (
         <div>
             <AppBar className={classes.header}>
                 <ToolBar>
+                <IconButton style={{color:'inherit'}}
+                className={classes.menueButton}
+                >
+                     <MenuIcon onClick={handleOpen} />
+                </IconButton>
+                <Drawer open={openBtn} onClose={handleClose}>
+                  {list()}
+                </Drawer>
                   <Box className={classes.component}> 
                         <img src={logoURL} alt="logo"  className={classes.logo} />
                         <Box className={classes.container}>
@@ -54,7 +99,7 @@ function Header() {
                         </Box>
                   </Box>
                   <SearchBar />    
-                  <HeaderButtons />        
+                <span className={classes.customButton}><HeaderButtons /></span>        
                </ToolBar>
             </AppBar>
         </div>

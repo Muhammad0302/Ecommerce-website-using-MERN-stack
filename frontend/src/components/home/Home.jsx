@@ -7,18 +7,30 @@ import Slide from './Slide'
 // import { products } from '../constants/data';
 import {useSelector,useDispatch} from 'react-redux'
 import {getProducts as listProducts} from '../../redux/actions/productAction'
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme=>({
     component :{
      padding: 10,
-     background: '#F2F2F2'
+     background: '#F2F2F2',
+     [theme.breakpoints.down('sm')]: {
+         padding: '10px 0 10px 0'
+     }
     },
     rightWrapper: {
       background: '#FFFFFF',
       padding: 5,
       margin: '12px 0 0 10px',
-      width: '17%'  
+      width: '17%',
+      [theme.breakpoints.down('md')]: {
+       display: 'none'
+    }  
+    },
+    widthOTheFirstSlide : {
+        width: '81%',
+        [theme.breakpoints.down('md')]: {
+            width: '100%'
+        }
     }
-})
+}));
 function Home() {
     const classes = useStyle()
     const productsGet = useSelector(state => state.getProducts)     
@@ -37,7 +49,7 @@ const adURL = 'https://rukminim1.flixcart.com/flap/464/708/image/633789f7def6005
             <Banner />
             </Box>
             <Box style={{display: 'flex'}}>
-               <Box style={{width: '81%'}}>
+               <Box  className={classes.widthOTheFirstSlide}>
                 <Slide
                 timer={true}
                 title='Deals of the Day'

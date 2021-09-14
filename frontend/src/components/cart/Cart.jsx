@@ -1,4 +1,4 @@
-import { Box, makeStyles, Typography, Button} from '@material-ui/core';
+import { Box, makeStyles, Typography, Button, Grid} from '@material-ui/core';
 import CartItem from './CartItem';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,11 +7,14 @@ import TotalView from './TotalView';
 import EmptyCart from './EmptyCart';
 
 
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme=>({
     component: {
          marginTop: 55,
         padding: '30px 135px',
         display: 'flex',
+        [theme.breakpoints.down('md')]: {
+        padding: '30px 0',   
+        }
     },
     leftComponent: {
         // width: '67%',
@@ -37,7 +40,7 @@ const useStyle = makeStyles({
         width: 250,
         height: 51
     }
-});
+}));
 
 const Cart = ({ match, history }) => {
     const classes = useStyle();
@@ -61,8 +64,8 @@ const Cart = ({ match, history }) => {
     return (
         <>
         { cartItems.length ? 
-            <Box container className={classes.component}>
-                <Box className={classes.leftComponent}>
+            <Grid container className={classes.component}>
+                <Grid lg={8} md={8} sm={8} xs={12} item className={classes.leftComponent}>
                     <Box className={classes.header}>
                         <Typography style={{fontWeight: 600, fontSize: 18}}>My Cart ({cartItems?.length})</Typography>
                     </Box>
@@ -73,11 +76,11 @@ const Cart = ({ match, history }) => {
                     <Box className={classes.bottom}>
                         <Button variant="contained" className={classes.placeOrder}>Place Order</Button>
                     </Box>
-                </Box>
-                <Box >
+                </Grid>
+                <Grid lg={4} md={4} sm={4} xs={12} item>
                     <TotalView cartItems={cartItems} />
-                </Box>
-            </Box> : <EmptyCart />
+                </Grid>
+            </Grid> : <EmptyCart />
         }
         </>
 

@@ -6,7 +6,7 @@ import Login from '../login/Login';
 import {LoginContext} from '../context/ContextProvider'
 import Profile from './Profile';
 import { useSelector,useDispatch } from 'react-redux';
-const useStyle = makeStyles({
+const useStyle = makeStyles(theme=>({
      login:{
      backgroundColor: '#ffffff',
      color: '#7874f0',
@@ -14,6 +14,10 @@ const useStyle = makeStyles({
      boxShadow: 'none',
      textTransform: 'none',
      borderRadius: 2,
+     [theme.breakpoints.down('sm')]: {
+         backgroundColor: '#2874f0',
+         color: '#FFFFFF'
+     }
     },
     wrapper: {
      marginLeft: 'auto',
@@ -21,14 +25,22 @@ const useStyle = makeStyles({
      display: 'flex',
      '&> *':{
          marginRight: 50,
-         alignItems: 'center'
+         alignItems: 'center',
+         [theme.breakpoints.down('sm')]: {
+             alignItems: 'center',
+             display: 'flex',
+             flexDirection: 'column'
+         }
+     },
+     [theme.breakpoints.down('sm')]: {
+         display: 'block',
      }
     },
     Link: {
         textDecoration: 'none',
         color: 'inherit'
     }
-})
+}));
 function HeaderButtons() {
     const classes = useStyle()
 

@@ -1,6 +1,11 @@
 import React from 'react'
-import {makeStyles,InputBase,alpha} from '@material-ui/core'
+import {makeStyles,InputBase,alpha, List, ListItem} from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
+import {useState} from 'react'
+import {getProducts as listProducts} from '../../redux/actions/productAction'
+import {useEffect} from 'react'
+import { useDispatch,useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 const useStyle = makeStyles((theme)=>({
     search: {
         position: 'relative',
@@ -9,7 +14,10 @@ const useStyle = makeStyles((theme)=>({
         marginLeft: 10,
         width: '40%',
         display: 'flex',
-        color: 'black' 
+        color: 'black',
+        [theme.breakpoints.down('sm')]: {
+          width: '66%'
+        } 
       },
       searchIcon: {
         padding: theme.spacing(0, 2),
@@ -30,15 +38,44 @@ const useStyle = makeStyles((theme)=>({
       inputInput: {
         paddingLeft: 20,
         padding: theme.spacing(1, 1, 1, 0)
+      },
+      list: {
+        position:'absolute',
+        color: '#000',
+        width: '100%',
+        background: '#FFFFFF',
+        margin: '30px 0 0 0',
+        [theme.breakpoints.down('sm')]: {
+          width: '100%'
+        }
       }
+
 }))
 function SearchBar() {
     const classes = useStyle()
+   
+   const [searchValue,setSearchValue] = useState()
+    const handleChange = (e) =>{
+        setSearchValue(e.target.value)
+        // console.log(searchValue)
+    }
+
+    const getProducts = useSelector(state => state.getProducts);
+    const { products } = getProducts;
+
+    const dispatch = useDispatch();
+    
+    useEffect(() => {
+            dispatch(listProducts);
+    }, [dispatch]);
+
     return (
           <div className={classes.search}>
           
             <InputBase
-              placeholder="Search for products, brand and more"
+            value={searchValue}
+            onChange={(e)=>handleChange(e)} 
+             placeholder="Search for products, brand and more"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -48,6 +85,24 @@ function SearchBar() {
               <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+            <br/>
+            {
+              searchValue &&
+              <List className={classes.list}>
+               
+               {
+                // products.filter(product=>product.title.longTitle.toLowerCase() === searchValue.toLowerCase())
+          products.filter(product=>product.title.shortTitle.toLowerCase().
+          includes(searchValue.toLowerCase())).map(product=>(
+            <ListItem >
+              <Link onClick={()=>setSearchValue('')} style={{textDecoration: 'none',color: 'inherit'}} to={`/product/${product.id}`}>
+               {product.title.shortTitle}  
+               </Link>        
+            </ListItem>
+          )) 
+           }   
+              </List>
+            }
           </div>   
     )
 }

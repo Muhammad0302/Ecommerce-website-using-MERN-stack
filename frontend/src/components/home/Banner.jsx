@@ -2,17 +2,21 @@ import React from 'react'
 import Carousel from 'react-material-ui-carousel'
 import { Paper, Button,makeStyles, Slide } from '@material-ui/core'
 import {bannerData} from '../constants/data'
-const useStyle = makeStyles ({
+const useStyle = makeStyles (theme=>({
  image: {
      width: '100%',
      backgroundPosition: 'center',
      backgroundSize: 'cover',
-     height: 280
+     height: 280,
+     [theme.breakpoints.down('sm')]: {
+        objectFit: 'cover',
+        height: 180 
+     }
  },
  carousel: {
      marginTop: 20
  }
-})
+}));
 function Banner() {
     const classes = useStyle()
     return (
